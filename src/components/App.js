@@ -18,6 +18,8 @@ class App extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.handleEntryChange = this.handleEntryChange.bind(this);
         this.handleEntrySubmit = this.handleEntrySubmit.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentWillMount() {
@@ -47,6 +49,9 @@ class App extends Component {
     }
 
     handleEntrySubmit(event) {
+        if(this.state.entry.length == 0) {
+            return;
+        }
         let note = {
             _id: shortid.generate(),
             text: this.state.entry,
@@ -57,6 +62,28 @@ class App extends Component {
         })
     }
 
+    handleEdit(id, text) {
+        console.log('editing')
+        const notes = _.map(this.state.notes, (note) => {
+            if(note._id !== id) {
+                return note;
+            } else {
+                 return Object.assign({},note, {text: text});
+            }
+        })
+        this.setState({
+            notes: notes
+        })
+    }
+
+    handleDelete(id) {
+        this.setState({
+            notes: _.filter(this.state.notes, (note) => {
+                return note._id !== id;
+            })
+        })
+    }
+
     componentWillUnmount() {
         base.removeBinding(this.notesRef);
     }
@@ -64,14 +91,17 @@ class App extends Component {
     render() {
         const notesList = _.map(this.state.notes, (note, index) => {
             return <Note key={note._id}
+                        id={note._id}
                         text={note.text}
+                        handleEdit={this.handleEdit}
+                        handleDelete={this.handleDelete}
                     />
         });        
         return (
             <Container>
                 <header>
                     <h2>NoteBook</h2>
-                    <Button onClick={this.openModal}>Add Modal</Button>
+                    <Button onClick={this.openModal}>Add Notes</Button>
                 </header>
                 <div>
                     <Modal open={this.state.modal}
