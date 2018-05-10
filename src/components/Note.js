@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Input, Modal } from 'semantic-ui-react';
+import Styles from './Note.css'
+import { Button, Input, Modal, TextArea } from 'semantic-ui-react';
 
 class Note extends Component {
     constructor(props) {
@@ -48,9 +49,17 @@ class Note extends Component {
     render() {
         return (
             <div>
-                <h4>{this.props.text}</h4>
-                <Button onClick={this.openModal}>Edit</Button>
-                <Button onClick={this.deleteNote}>Delete</Button>
+                <div className={Styles.note}>
+                    <p className={Styles.displayNote}>{this.props.text}</p>
+                    <Button color='black' 
+                        onClick={this.openModal}
+                    >Edit
+                    </Button>
+                    <Button color='black' 
+                        onClick={this.deleteNote}
+                    >Delete
+                    </Button>
+                </div>
                 <div>
                     <Modal size='mini'
                         open={this.state.modal}
@@ -58,11 +67,14 @@ class Note extends Component {
                         closeIcon
                     >
                         <Modal.Content>
-                            <Input value={this.state.textNote} 
-                                size='massive'
-                                fluid
-                                onChange={this.handleTextChange}
-                            />
+                            <TextArea rows='10'
+                                autoHeight
+                                cols='30'
+                                autoFocus
+                                value={this.state.textNote}
+                                onChange={this.handleEntryChange}
+                            >
+                            </TextArea>
                         </Modal.Content>
                         <Modal.Actions>
                             <Button onClick={this.handleEditButton}>Edit</Button>

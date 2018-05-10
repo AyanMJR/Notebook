@@ -3,7 +3,9 @@ import { base } from '../firebase'
 import _ from 'lodash';
 import shortid from 'shortid';
 import { Container, Input, Button, TextArea, Modal } from 'semantic-ui-react';
+import MenuBar from './MenuBar';
 import Note from './Note';
+import styles from './App.css';
 
 class App extends Component {
 
@@ -14,10 +16,7 @@ class App extends Component {
             entry: '',
             modal: false
         }
-        this.openModal =  this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.handleEntryChange = this.handleEntryChange.bind(this);
-        this.handleEntrySubmit = this.handleEntrySubmit.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
@@ -28,33 +27,11 @@ class App extends Component {
             state: 'notes'
         })
     }
-
-    openModal() {
-        this.setState({
-            modal: true
-        })
-    }
-
-    closeModal() {
-        this.setState({
-            modal: false,
-            entry: ''
-        });
-    }
-
-    handleEntryChange(event) {
-        this.setState({
-            entry: event.target.value
-        })
-    }
-
-    handleEntrySubmit(event) {
-        if(this.state.entry.length == 0) {
-            return;
-        }
+        
+    handleAdd(textEntry) {
         let note = {
             _id: shortid.generate(),
-            text: this.state.entry,
+            text: textEntry,
             timeStamp: Date.now()
         }        
         this.setState({
@@ -99,29 +76,12 @@ class App extends Component {
         });        
         return (
             <Container>
-                <header>
-                    <h2>NoteBook</h2>
-                    <Button onClick={this.openModal}>Add Notes</Button>
-                </header>
+                <MenuBar handleAdd={this.handleAdd}
+                />
                 <div>
-                    <Modal open={this.state.modal}
-                        onClose={this.closeModal}
-                        size='mini'
-                        closeIcon    
-                    >
-                        <Modal.Content>
-                            <Input placeholder='Write your note'
-                                size='massive'
-                                fluid
-                                value={this.state.entry}
-                                onChange={this.handleEntryChange}
-                            />
-                        </Modal.Content>
-                        <Modal.Actions>
-                            <Button onClick={this.handleEntrySubmit}>Post</Button>
-                        </Modal.Actions>
-                    </Modal>
-                    {notesList}
+                    <div className={styles.noteList}>
+                        {notesList}
+                    </div>
                 </div>
             </Container>
         )
