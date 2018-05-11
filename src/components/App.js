@@ -5,7 +5,7 @@ import shortid from 'shortid';
 import { Container, Input, Button, TextArea, Modal } from 'semantic-ui-react';
 import MenuBar from './MenuBar';
 import Note from './Note';
-import styles from './App.css';
+import Styles from './App.css';
 
 class App extends Component {
 
@@ -79,7 +79,7 @@ class App extends Component {
                 <MenuBar handleAdd={this.handleAdd}
                 />
                 <div>
-                    <div className={styles.noteList}>
+                    <div className={Styles.noteList}>
                         {notesList}
                     </div>
                 </div>

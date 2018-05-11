@@ -16,7 +16,7 @@ class Note extends Component {
         this.handleEditButton = this.handleEditButton.bind(this);
 
     }
-
+    
     openModal() {
         this.setState({
             modal: true
@@ -72,7 +72,7 @@ class Note extends Component {
                                 cols='30'
                                 autoFocus
                                 value={this.state.textNote}
-                                onChange={this.handleEntryChange}
+                                onChange={this.handleTextChange}
                             >
                             </TextArea>
                         </Modal.Content>
