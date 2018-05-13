@@ -32,7 +32,7 @@ class App extends Component {
         let note = {
             _id: shortid.generate(),
             text: textEntry,
-            timeStamp: Date.now()
+            timeStamp: Date().toString()
         }        
         this.setState({
             notes: [...this.state.notes, note]
@@ -70,6 +70,7 @@ class App extends Component {
             return <Note key={note._id}
                         id={note._id}
                         text={note.text}
+                        time={note.timeStamp}
                         handleEdit={this.handleEdit}
                         handleDelete={this.handleDelete}
                     />

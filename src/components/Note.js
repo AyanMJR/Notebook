@@ -40,6 +40,7 @@ class Note extends Component {
         let id = this.props.id;
         let note = this.state.textNote;
         this.props.handleEdit(id, note);
+        this.closeModal();
     }
 
     deleteNote() {
@@ -63,6 +64,8 @@ class Note extends Component {
             <div>
                 <div className={Styles.note}>
                     <p className={Styles.displayNote}>{this.props.text}</p>
+                    <hr/>
+                    <p>Posted on {this.props.time}</p>
                     <Button color='black' 
                         onClick={this.openModal}
                     >Edit
@@ -79,7 +82,8 @@ class Note extends Component {
                         closeIcon
                     >
                         <Modal.Content>
-                            <TextArea rows='10'
+                            <TextArea style={{backgroundColor: '#f1f94d'}} 
+                                rows='10'
                                 autoHeight
                                 cols='30'
                                 autoFocus
@@ -89,7 +93,10 @@ class Note extends Component {
                             </TextArea>
                         </Modal.Content>
                         <Modal.Actions>
-                            <Button onClick={this.handleEditButton}>Edit</Button>
+                            <Button color='black' 
+                                onClick={this.handleEditButton}
+                            >Edit
+                            </Button>
                         </Modal.Actions>
                     </Modal>
                 </div>

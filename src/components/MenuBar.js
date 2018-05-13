@@ -14,6 +14,13 @@ class MenuBar extends Component {
         this.handleEntryChange = this.handleEntryChange.bind(this);
         this.handleEntrySubmit = this.handleEntrySubmit.bind(this);
     }
+    
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.state !== nextState) {
+            return true;
+        }
+        return false;
+    }
 
     openModal() {
         this.setState({
@@ -40,6 +47,7 @@ class MenuBar extends Component {
         }
         let textNote = this.state.entry;
         this.props.handleAdd(textNote);
+        this.closeModal();
 
     }
 
@@ -54,21 +62,14 @@ class MenuBar extends Component {
                     >Create Note
                     </Button>
                 </header>
-                {/*<Menu>
-                    <Menu.Header>NoteBook</Menu.Header>
-                    <Menu.Item position='right' 
-                        onClick={this.openModal}                
-                    >
-                        Create Note
-                    </Menu.Item>
-                </Menu>*/}
                 <Modal open={this.state.modal}
                             onClose={this.closeModal}
                             size='mini'
                             closeIcon    
                         >
                             <Modal.Content>
-                                <TextArea rows='10'
+                                <TextArea style={{backgroundColor: '#f1f94d'}} 
+                                    rows='10'
                                     autoHeight
                                     cols='30'
                                     autoFocus
@@ -78,7 +79,10 @@ class MenuBar extends Component {
                                 </TextArea>
                             </Modal.Content>
                             <Modal.Actions>
-                                <Button onClick={this.handleEntrySubmit}>Post</Button>
+                                <Button color='black'
+                                    onClick={this.handleEntrySubmit}
+                                >Post
+                                </Button>
                             </Modal.Actions>
                         </Modal>
             </div>
