@@ -46,6 +46,18 @@ class Note extends Component {
         this.props.handleDelete(this.props.id);
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.state.modal !== nextState.modal || 
+            this.state.textNote !== nextState.textNote) {
+                return true;
+        }
+        if(this.props.text !== nextProps.text) {
+            return true;
+        }
+        return false;
+
+    }
+
     render() {
         return (
             <div>
